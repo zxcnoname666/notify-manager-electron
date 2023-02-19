@@ -15,9 +15,13 @@ You can test the library with `npm run test`. And also see the source code of [t
 <a href="javascript:void(0)">
 <img src="https://cdn.scpsl.store/another/6p43djg1idjp/image.png">
 </a>
+
 > You can change the appearance of the notification by adding your style when creating the NotifyManager
 
 You can use your own sounds when showing a notification.
+
+https://user-images.githubusercontent.com/121295212/219909789-5f343998-814b-4c2a-814b-d290ea1fe3a2.mp4
+
 
 # How to use
 ### Creating a NotifyManager
