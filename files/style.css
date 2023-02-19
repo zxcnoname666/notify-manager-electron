@@ -1,0 +1,105 @@
+body{
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+body[class="position-1"],
+body[class="position-4"] {
+    align-items: flex-end;
+}
+body[class="position-2"],
+body[class="position-3"] {
+    align-items: flex-start;
+}
+audio{
+    display: none;
+}
+#block{
+    display: block;
+    width: 100%;
+}
+.notify{
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 16px;
+    background: #20272c91;
+    background: linear-gradient(90deg, #1f1f1fdc 0%, #212122d3 100%);
+}
+.notify .title{
+    display: flex;
+    color: #ffffff;
+    font-family: cursive;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 22px;
+    margin: 0 10px;
+    margin-bottom: 3px;
+}
+.notify img{
+    min-height: 55px;
+    min-width: 55px;
+    height: 55px;
+    width: 55px;
+    text-indent: -9999px;
+    border-radius: 10%;
+    background-size: cover;
+    object-fit: cover;
+    overflow: hidden;
+}
+.notify p{
+    color: #c8c8c8;
+    margin: 10px;
+    overflow-y: auto;
+    width: 100%;
+    word-break:break-all;
+}
+::-webkit-scrollbar{
+    height: 3px;
+    width: 3px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #99afbd;
+}
+::-webkit-scrollbar-track{
+    background-color: #18191c;
+}
+
+body[class="position-1"] .notify,
+body[class="position-2"] .notify {
+    animation: toLeftStart .9s cubic-bezier(0.28, 0.99, 0.58, 1);
+}
+body[class="position-1"] .notify.hide,
+body[class="position-2"] .notify.hide {
+    animation: toRightEnd .9s cubic-bezier(0.28, 0.99, 0.58, 1);
+}
+
+body[class="position-3"] .notify,
+body[class="position-4"] .notify {
+    animation: toRightStart .9s cubic-bezier(0.28, 0.99, 0.58, 1);
+}
+body[class="position-3"] .notify.hide,
+body[class="position-4"] .notify.hide {
+    animation: toLeftEnd .9s cubic-bezier(0.28, 0.99, 0.58, 1);
+}
+
+@keyframes toLeftStart{
+    from{transform: translateX(110%)}
+    100%{transform: translateX(0)}
+}
+@keyframes toRightEnd{
+    from{transform: translateX(0)}
+    100%{transform: translateX(110%)}
+}
+
+@keyframes toRightStart{
+    from{transform: translateX(-110%)}
+    100%{transform: translateX(0)}
+}
+@keyframes toLeftEnd{
+    from{transform: translateX(0)}
+    100%{transform: translateX(-110%)}
+}
