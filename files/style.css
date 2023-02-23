@@ -28,6 +28,7 @@ audio{
     border-radius: 16px;
     background: #20272c91;
     background: linear-gradient(90deg, #1f1f1fdc 0%, #212122d3 100%);
+    box-shadow: -1px 5px 5px 1px #00000025, -1px 5px 5px 1px #00000040;
 }
 .notify .title{
     display: flex;
@@ -55,7 +56,7 @@ audio{
     margin: 10px;
     overflow-y: auto;
     width: 100%;
-    word-break:break-all;
+    word-break: break-word;
 }
 ::-webkit-scrollbar{
     height: 3px;

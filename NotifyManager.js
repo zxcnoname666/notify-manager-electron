@@ -46,6 +46,7 @@ module.exports = class NotifyManager {
 
         this.win.setVisibleOnAllWorkspaces(true);
         this.win.setIgnoreMouseEvents(true, {forward:false});
+        this.win.setFocusable(false);
         this.win.showInactive();
 
         (async() => {

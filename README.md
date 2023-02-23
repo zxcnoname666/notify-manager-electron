@@ -13,7 +13,7 @@ You can test the library with `npm run test`. And also see the source code of [t
 
 #### Approximate result:
 <a href="javascript:void(0)">
-<img src="https://cdn.scpsl.store/another/6p43djg1idjp/image.png">
+<img src="https://cdn.scpsl.store/another/kvrfintgaflc/image.png">
 </a>
 
 > You can change the appearance of the notification by adding your style when creating the NotifyManager
