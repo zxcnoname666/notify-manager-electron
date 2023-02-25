@@ -4,7 +4,7 @@ const Notify = require('./Notify');
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-remote.initialize();
+try{remote.initialize();}catch{}
 
 module.exports = class NotifyManager {
     /**
