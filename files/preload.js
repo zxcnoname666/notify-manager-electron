@@ -21,7 +21,7 @@ electron.ipcRenderer.once('custom-style', async(_, style) => {
 });
 
 electron.ipcRenderer.on('show', async(_, notify) => {
-    console.log(notify)
+    //console.log(notify)
     while(!_loaded) await delay(1000);
 
     const block = document.getElementById('block');
@@ -29,7 +29,7 @@ electron.ipcRenderer.on('show', async(_, notify) => {
     const parent = document.createElement('div');
     parent.className = 'notify';
     parent.id = notify.id;
-    parent.addEventListener('click', () => console.log('click? not click.'));
+    //parent.addEventListener('click', () => console.log('click? not click.'));
     if(block.children < 1 || position == 2 || position == 3){
         block.appendChild(parent);
     }else{
@@ -64,7 +64,7 @@ electron.ipcRenderer.on('show', async(_, notify) => {
     }, notify.time * 1000);
 
     if(notify.sound){
-        const audio =  document.querySelector('audio');
+        const audio = document.querySelector('audio');
         audio.src = notify.sound.url;
         try{
             audio.volume = notify.sound.volume / 100;
