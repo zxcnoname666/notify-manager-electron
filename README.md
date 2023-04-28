@@ -40,6 +40,34 @@ const notify = new Notify('Title of notify', 'Body of notify. HTML allowed.');
 // show notify
 _manager.show(notify);
 ```
+#### Hook onDestroy of notify
+```javascript
+const notify = new Notify('Test notify', 'Test.');
+
+notify.onDestroy(() => console.log('destroyed'));
+notify.onDestroy(() => console.log('2nd console log of notify destroy'));
+
+// show notify
+_manager.show(notify);
+```
+#### Hook onclick of notify
+```javascript
+const notify = new Notify('Click hook', 'Click on the notify.');
+
+// show notify
+_manager.show(notify, () => {
+    console.log('clicked on the notify');
+    //..... other code
+});
+```
+#### Open an external link when click on the notify
+```javascript
+const { shell } = require('electron');
+
+const notify = new Notify('Click hook', 'Click to open link');
+
+_manager.show(notify, () => shell.openExternal('https://github.com/fydne/notify-manager-electron'));
+```
 #### Notification with image & custom duration
 Recommended image size - 55x55px
 ```javascript

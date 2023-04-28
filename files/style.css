@@ -3,6 +3,7 @@ body{
     height: 100vh;
     margin: 0;
     overflow: hidden;
+    user-select: none;
 }
 body[class="position-1"],
 body[class="position-4"] {
@@ -21,6 +22,7 @@ audio{
 }
 .notify{
     display: flex;
+    position: relative;
     flex-direction: column;
     min-height: 80px;
     padding: 15px;
@@ -29,6 +31,13 @@ audio{
     background: #20272c91;
     background: linear-gradient(90deg, #1f1f1fdc 0%, #212122d3 100%);
     box-shadow: -1px 5px 5px 1px #00000025, -1px 5px 5px 1px #00000040;
+}
+.notify.clickActive{
+    cursor: pointer;
+}
+.notify.clickActive:hover{
+    box-shadow: 0px 2px 8px 4px rgba(44, 79, 131, 0.4);
+    transform: translateY(-5px);
 }
 .notify .title{
     display: flex;

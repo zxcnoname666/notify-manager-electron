@@ -1,10 +1,8 @@
-const { BrowserWindow, screen, shell } = require('electron');
-const remote = require('@electron/remote/main');
+const { BrowserWindow, screen, shell, ipcMain } = require('electron');
 const Notify = require('./Notify');
+const Extensions = require('./Extensions');
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-try{remote.initialize();}catch{}
 
 module.exports = class NotifyManager {
     /**
@@ -18,6 +16,8 @@ module.exports = class NotifyManager {
     constructor(position = 1, customStyle = ''){
         this.loaded = false;
         this.position = position;
+        this.onclickEvents = [];
+        this.activeNotifications = [];
 
         const display = screen.getPrimaryDisplay();
 
@@ -42,10 +42,8 @@ module.exports = class NotifyManager {
             }
         });
 
-        remote.enable(this.win.webContents);
-
         this.win.setVisibleOnAllWorkspaces(true);
-        this.win.setIgnoreMouseEvents(true, {forward:false});
+        this.win.setIgnoreMouseEvents(true, {forward:true});
         this.win.setFocusable(false);
         this.win.showInactive();
 
@@ -53,21 +51,71 @@ module.exports = class NotifyManager {
             await this.win.loadURL('file://' + __dirname + '/files/render.html');
             this.win.webContents.setWindowOpenHandler(({ url }) => {
                 shell.openExternal(url);
-                return { action: 'deny' }
+                return { action: 'deny' };
             });
             this.win.send('load-position', this.position);
             this.win.send('custom-style', customStyle);
             this.loaded = true;
             //this.win.webContents.openDevTools({mode: 'detach'});
+
+            ipcMain.on('notify-manager-set-visibly', (ev, boolean) => {
+                if(ev.sender != this.win.webContents) return;
+                this.win.setIgnoreMouseEvents(!boolean, {forward:true});
+            });
+            ipcMain.on('notify-manager-onclick', (ev, id) => {
+                if(ev.sender != this.win.webContents) return;
+                const element = this.onclickEvents.find(x => x.id == id);
+                if(!element) return;
+                try{
+                    if(typeof element.event == 'function'){
+                        element.event();
+                    }
+                }catch(e){
+                    console.error(e);
+                }
+            });
+            ipcMain.on('notify-manager-destory', (ev, id) => {
+                if(ev.sender != this.win.webContents) return;
+                const notify = this.activeNotifications.find(x => x.id == id);
+                if(!notify) return;
+                Extensions.destroyNotify(notify, this);
+            });
         })();
     }
 
     /**
      * @param      {Notify}  notify     Notification to show
      */
-    async show(notify){
+    async show(notify, onclick = null){
         while(!this.loaded) await delay(1000);
-        this.win.send('show', notify);
+        
+        this.win.send('show', {
+            id: notify.id,
+            title: notify.title,
+            body: notify.body,
+            time: notify.time,
+            image: notify.image,
+            sound: notify.sound,
+        }, !(!onclick));
+
+        this.activeNotifications.push(notify);
+
+        setTimeout(() => {
+            Extensions.destroyNotify(notify, this);
+        }, notify.time * 1000);
+
+        if(onclick){
+            if(typeof onclick != 'function'){
+                console.error('onclick is not a function');
+                return notify;
+            }
+            const arrElement = {
+                event: onclick,
+                id: notify.id,
+            }
+            this.onclickEvents.push(arrElement);
+        }
+
         return notify;
     }
     
@@ -76,6 +124,11 @@ module.exports = class NotifyManager {
      */
     destroy(notify){
         if(!this.loaded) throw new Error('window not initialized yet');
-        this.win.send('destroy', notify.id);
+        this.win.send('destroy', {
+            id: notify.id,
+            sound: notify.sound
+        });
+
+        Extensions.destroyNotify(notify, this);
     }
 };

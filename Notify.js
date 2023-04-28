@@ -17,5 +17,16 @@ module.exports = class Notify {
         this.time = time;
         this.image = imageUrl;
         this.sound = sound;
+
+        this.destroyed = false;
+        this.destroyEvents = [];
+    }
+
+    onDestroy(func) {
+        if(typeof func != 'function'){
+            console.error('func is not a function');
+            return;
+        }
+        this.destroyEvents.push(func);
     }
 };
