@@ -1,15 +1,4 @@
 <div id="{uid}">
-<script>
-function ReplyClick(_this) {
-    let _parent = _this.parentElement;
-    if(!_parent) _parent = document.body;
-    const reply = _parent.getElementById('text.reply');
-    if(!reply) return console.log('reply element not found');
-    const message = reply.value;
-    if(!message || 0 >= message.length) return console.log('message is empty');
-    ipc.send('reply.message', _parent.id, message);
-}
-</script>
 <span>{message}</span>
 <br>
 <input id="replyInput" style="
