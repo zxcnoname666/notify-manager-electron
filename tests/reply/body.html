@@ -1,0 +1,42 @@
+<div id="{uid}">
+<script>
+function ReplyClick(_this) {
+    let _parent = _this.parentElement;
+    if(!_parent) _parent = document.body;
+    const reply = _parent.getElementById('text.reply');
+    if(!reply) return console.log('reply element not found');
+    const message = reply.value;
+    if(!message || 0 >= message.length) return console.log('message is empty');
+    ipc.send('reply.message', _parent.id, message);
+}
+</script>
+<span>{message}</span>
+<br>
+<input id="replyInput" style="
+margin-top: 5px;
+border: 1px solid aliceblue;
+padding: 5px;outline: none;
+background-color: #00000040;
+color: #fff;
+border-radius: 10px;
+" placeholder="Write your answer"
+onfocus="FocusNotify('{notify.id}')"
+onblur="DefocusNotify('{notify.id}')">
+<button style="
+border: 0;
+border-radius: 25px;
+color: #282e38;
+background-color: lime;
+user-select: none;
+cursor: pointer;
+padding: 5px 10px;
+" onclick="
+let _parent = this.parentElement;
+if(!_parent) _parent = document.body;
+const reply = _parent.querySelector('#replyInput');
+if(!reply) return console.log('reply element not found');
+const message = reply.value;
+if(!message || 0 >= message.length) return console.log('message is empty');
+ipc.send('reply.message', _parent.id, message);
+">Send</button>
+</div>

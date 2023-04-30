@@ -1,7 +1,16 @@
 const electron = require('electron');
 
+electron.contextBridge.exposeInMainWorld('ipc', {
+    on: (name, event) => electron.ipcRenderer.on(name, event),
+    once: (name, event) => electron.ipcRenderer.once(name, event),
+    send: (name, ...args) => electron.ipcRenderer.send(name, ...args),
+});
+electron.contextBridge.exposeInMainWorld('FocusNotify', (id) => FocusNotify(parseInt(id)));
+electron.contextBridge.exposeInMainWorld('DefocusNotify', (id) => DefocusNotify(parseInt(id)));
+
 let _loaded = false;
 let position = 1;
+const focusedNotify = [];
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -21,7 +30,6 @@ electron.ipcRenderer.once('custom-style', async(_, style) => {
 });
 
 electron.ipcRenderer.on('show', async(_, notify, click) => {
-    //console.log(notify)
     while(!_loaded) await delay(1000);
 
     const block = document.getElementById('block');
@@ -59,12 +67,14 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
     let globalLock = false;
     let offsetX = 0;
     parent.onmousedown = (ev) => {
+        if(focusedNotify.some(x => x == notify.id)) return;
         if(blockHide) return;
         hideActive = true;
         offsetX = parent.offsetLeft - ev.clientX;
     };
     parent.onmouseup = () => {
         if(globalLock) return;
+        if(!hideActive) return;
         hideActive = false;
         offsetX = 0;
         blockHide = true;
@@ -87,6 +97,11 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
     };
     parent.onmousemove = (ev) => {
         if(!hideActive) return;
+        if(focusedNotify.some(x => x == notify.id)){
+            parent.onmouseup();
+            hideActive = false;
+            return;
+        }
         const _px = (ev.clientX + offsetX);
         if(_px < 0 && (position == 1 || position == 2)) return;
         if(_px > 0 && (position == 3 || position == 4)) return;
@@ -101,13 +116,16 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
                 electron.ipcRenderer.send('notify-manager-destory', notify.id);
             }, 850);
             StopAudio(notify);
+            try{DefocusNotify(notify.id);}catch{}
             return;
         }
         parent.style.left = _px + 'px';
     };
 
     parent.onmouseenter = () => {
-        electron.ipcRenderer.send('notify-manager-set-visibly', true);
+        let focus = false;
+        try{focus = !(!(body.querySelector('input') || body.querySelector('textarea')));}catch{}
+        electron.ipcRenderer.send('notify-manager-set-visibly', true, focus);
     };
     parent.onmouseleave = () => {
         electron.ipcRenderer.send('notify-manager-set-visibly', false);
@@ -117,14 +135,25 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
     };
 
     setTimeout(() => {
-        if(globalLock) return;
-        if(!parent) return;
-        parent.id = '';
-        parent.className += ' hide';
-        setTimeout(() => {
-            try{parent.outerHTML = '';}catch{}
-        }, 850);
-        StopAudio(notify);
+        if(focusedNotify.some(x => x == notify.id)){
+            const interv = setInterval(() => {
+                if(focusedNotify.some(x => x == notify.id)) return;
+                clearInterval(interv);
+                _destroy();
+            }, 500);
+            return;
+        }
+        _destroy();
+        function _destroy() {
+            if(globalLock) return;
+            if(!parent) return;
+            parent.id = '';
+            parent.className += ' hide';
+            setTimeout(() => {
+                try{parent.outerHTML = '';}catch{}
+            }, 850);
+            StopAudio(notify);
+        }
     }, notify.time * 1000);
 
     if(notify.sound){
@@ -158,4 +187,16 @@ function StopAudio(notify) {
             audio.pause();
         }
     }, 900);
+}
+
+function FocusNotify(id) {
+    if(isNaN(id)) return;
+    if(focusedNotify.indexOf(id) > -1) return;
+    focusedNotify.push(id);
+}
+function DefocusNotify(id) {
+    if(isNaN(id)) return;
+    const index = focusedNotify.indexOf(id);
+    if(0 > index) return;
+    focusedNotify.splice(index, 1);
 }

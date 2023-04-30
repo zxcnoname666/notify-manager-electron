@@ -33,7 +33,7 @@ module.exports = class NotifyManager {
             fullscreenable: false,
             focusable: false,
             frame: false,
-            titleBarStyle: 'hidden',
+            hasShadow: false,
             x: (this.position == 1 || this.position == 2) ? display.workAreaSize.width + display.workArea.x - 320 : 0,
             y: 0,
             webPreferences:{
@@ -58,9 +58,11 @@ module.exports = class NotifyManager {
             this.loaded = true;
             //this.win.webContents.openDevTools({mode: 'detach'});
 
-            ipcMain.on('notify-manager-set-visibly', (ev, boolean) => {
+            ipcMain.on('notify-manager-set-visibly', (ev, boolean, focus) => {
                 if(ev.sender != this.win.webContents) return;
                 this.win.setIgnoreMouseEvents(!boolean, {forward:true});
+                if(boolean && focus) this.win.setFocusable(boolean);
+                else this.win.setFocusable(false);
             });
             ipcMain.on('notify-manager-onclick', (ev, id) => {
                 if(ev.sender != this.win.webContents) return;

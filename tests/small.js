@@ -1,7 +1,7 @@
 const { app, BrowserWindow, shell } = require('electron');
-const Manager = require('./index').NotifyManager;
-const Notify = require('./index').Notify;
-const Sound = require('./index').NotifySound;
+const Manager = require('../files/index').NotifyManager;
+const Notify = require('../files/index').Notify;
+const Sound = require('../files/index').NotifySound;
 
 app.whenReady().then(() => {
     init();
