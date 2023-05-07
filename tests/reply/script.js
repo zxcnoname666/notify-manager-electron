@@ -24,7 +24,7 @@ const init = async() => {
         _manager.destroy(_notify);
     });
     
-    _manager.show(_notify)
+    _manager.show(_notify);
 };
 
 app.whenReady().then(() => {
@@ -46,5 +46,5 @@ function GenerateMessage() {
     return messages[rand - 1];
 }
 function GenerateRandom() {
-    return 'xxxxxxxxxxxx'.replace(/[x]/g, function(c) {var r = Math.random()*32|0,v=c=='x'?r:r&0x3|0x8;return v.toString(32);});
+    return 'xxxxxxxxxxxx'.replace(/[x]/g, function() {var r = Math.random()*32|0;return r.toString(32);});
 }
