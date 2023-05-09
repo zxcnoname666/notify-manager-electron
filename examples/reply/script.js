@@ -46,5 +46,5 @@ function GenerateMessage() {
     return messages[rand - 1];
 }
 function GenerateRandom() {
-    return 'xxxxxxxxxxxx'.replace(/[x]/g, function() {var r = Math.random()*32|0;return r.toString(32);});
+    return 'xxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random()*32|0).toString(32));
 }

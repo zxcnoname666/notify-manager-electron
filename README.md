@@ -9,7 +9,7 @@ Create beautiful and functional notifications on electron
 </p>
 
 # Info
-You can test the library with `npm run test` or `npm run test.reply`. And also see the source code of [tests](https://github.com/fydne/Notify-Manager-electron/tree/main/tests)
+You can test the library with `npm run test` or `npm run test.reply`. And also see the source code of [examples](https://github.com/fydne/Notify-Manager-electron/tree/main/examples)
 
 #### Approximate result:
 <a href="javascript:void(0)">
@@ -22,14 +22,14 @@ You can use your own sounds when showing a notification.
 
 # Demo
 ## Standart notify
-Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/tests/small.js)
+Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/examples/small.js)
 
 Demo:
 
 https://user-images.githubusercontent.com/121295212/219909789-5f343998-814b-4c2a-814b-d290ea1fe3a2.mp4
 
 ## Reply notify
-Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/tests/reply)
+Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/examples/reply)
 
 Demo:
 
