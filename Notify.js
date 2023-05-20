@@ -22,6 +22,10 @@ module.exports = class Notify {
         this.destroyEvents = [];
     }
 
+    isDestroyed() {
+        return this.destroyed;
+    }
+
     onDestroy(func) {
         if(typeof func != 'function'){
             console.error('func is not a function');
