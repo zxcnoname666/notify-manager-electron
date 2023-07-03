@@ -85,6 +85,14 @@ module.exports = class NotifyManager {
         })();
     }
 
+    isLoaded() {
+        return this.loaded;
+    }
+    
+    getWindow() {
+        return this.win;
+    }
+
     /**
      * @param      {Notify}  notify     Notification to show
      */

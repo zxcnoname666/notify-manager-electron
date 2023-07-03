@@ -1,3 +1,5 @@
+import { BrowserWindow } from "electron";
+
 export class Notify {
     /**
      * @param title Title of notify
@@ -112,4 +114,14 @@ export class NotifyManager {
      * @param notify Notification to destroy
      */
     destroy(notify: Notify) : void;
+
+    /**
+     * Displays whether initialization has ended or not.
+     */
+    isLoaded() : boolean;
+
+    /**
+     * Gets the BrowserWindow of notification manager.
+     */
+    getWindow() : BrowserWindow;
 };

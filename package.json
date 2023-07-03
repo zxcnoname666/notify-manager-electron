@@ -1,6 +1,6 @@
 {
   "name": "notify-manager-electron",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Create beautiful and functional notifications on electron",
   "main": "files/index.js",
   "types": "files/index.d.ts",
