@@ -110,11 +110,15 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
             blockHide = true;
             globalLock = true;
             parent.id = '';
-            parent.className += ' hide';
+            parent.classList.add('hide');
             setTimeout(() => {
-                try{parent.outerHTML = '';}catch{}
+                try{
+                    setTimeout(() => parent.outerHTML = '', 100);
+                    parent.setAttribute('send-height', parent.clientHeight + 'px');
+                    parent.classList.add('del');
+                }catch{}
                 electron.ipcRenderer.send('notify-manager-destory', notify.id);
-            }, 850);
+            }, 750);
             StopAudio(notify);
             try{DefocusNotify(notify.id);}catch{}
             return;
@@ -148,10 +152,14 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
             if(globalLock) return;
             if(!parent) return;
             parent.id = '';
-            parent.className += ' hide';
+            parent.classList.add('hide');
             setTimeout(() => {
-                try{parent.outerHTML = '';}catch{}
-            }, 850);
+                try{
+                    setTimeout(() => parent.outerHTML = '', 100);
+                    parent.setAttribute('send-height', parent.clientHeight + 'px');
+                    parent.classList.add('del');
+                }catch{}
+            }, 750);
             StopAudio(notify);
         }
     }, notify.time * 1000);
@@ -169,11 +177,17 @@ electron.ipcRenderer.on('show', async(_, notify, click) => {
 });
 
 electron.ipcRenderer.on('destroy', async(_, notify) => {
-    const element = document.getElementById(notify.id);
-    if(!element) return console.log('notify of id ' + notify.id + ' not found');
-    element.id = '';
-    element.className += ' hide';
-    setTimeout(() => element.outerHTML = '', 850);
+    const parent = document.getElementById(notify.id);
+    if(!parent) return console.log('notify of id ' + notify.id + ' not found');
+    parent.id = '';
+    parent.classList.add('hide');
+    setTimeout(() => {
+        try{
+            setTimeout(() => parent.outerHTML = '', 100);
+            parent.setAttribute('send-height', parent.clientHeight + 'px');
+            parent.classList.add('del');
+        }catch{}
+    }, 750);
     StopAudio(notify);
 });
 

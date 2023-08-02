@@ -1,6 +1,6 @@
 {
   "name": "notify-manager-electron",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Create beautiful and functional notifications on electron",
   "main": "files/index.js",
   "types": "files/index.d.ts",
@@ -27,6 +27,6 @@
   ],
   "homepage": "https://github.com/fydne/notify-manager-electron#readme",
   "devDependencies": {
-    "electron": "^23.1.0"
+    "electron": "^25.4.0"
   }
 }

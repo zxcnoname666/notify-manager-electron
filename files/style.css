@@ -96,6 +96,19 @@ body[class="position-4"] .notify.hide {
     animation: toLeftEnd .9s cubic-bezier(0.28, 0.99, 0.58, 1);
 }
 
+body .notify.hide.del{
+    min-height: 0px;
+    animation: toDelHide .1s cubic-bezier(1, -0.01, 0.38, 0.64);
+}
+body[class="position-1"] .notify.hide.del,
+body[class="position-2"] .notify.hide.del{
+    transform: translateX(110%);
+}
+body[class="position-3"] .notify.hide.del,
+body[class="position-4"] .notify.hide.del{
+    transform: translateX(-110%);
+}
+
 @keyframes toLeftStart{
     from{transform: translateX(110%)}
     100%{transform: translateX(0)}
@@ -112,4 +125,9 @@ body[class="position-4"] .notify.hide {
 @keyframes toLeftEnd{
     from{transform: translateX(0)}
     100%{transform: translateX(-110%)}
+}
+
+@keyframes toDelHide{
+    from{height: attr(send-height);}
+    to{height: 0px;}
 }

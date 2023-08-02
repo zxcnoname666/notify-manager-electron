@@ -45,7 +45,6 @@ module.exports = class NotifyManager {
         this.win.setVisibleOnAllWorkspaces(true);
         this.win.setIgnoreMouseEvents(true, {forward:true});
         this.win.setFocusable(false);
-        this.win.showInactive();
 
         (async() => {
             await this.win.loadURL('file://' + __dirname + '/files/render.html');
@@ -99,6 +98,7 @@ module.exports = class NotifyManager {
     async show(notify, onclick = null){
         while(!this.loaded) await delay(1000);
         
+        this.win.showInactive();
         this.win.send('show', {
             id: notify.id,
             title: notify.title,

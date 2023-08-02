@@ -28,6 +28,12 @@ const methods = {
             if(index > -1){
                 manager.activeNotifications.splice(index, 1);
             }
+            setTimeout(() => {
+                if(manager.activeNotifications.length == 0){
+                    manager.win.hide();
+                    manager.win.webContents.session.clearCache();
+                }
+            }, 1000);
         }
 
         if(manager.onclickEvents && manager.onclickEvents.constructor == arrConstructor){
