@@ -26,14 +26,18 @@ Example: [Click](https://github.com/zxcnoname666/Notify-Manager-electron/tree/ma
 
 Demo:
 
-https://user-images.githubusercontent.com/121295212/219909789-5f343998-814b-4c2a-814b-d290ea1fe3a2.mp4
+https://github.com/zxcnoname666/notify-manager-electron/assets/156155219/57532a45-d0d2-46bf-bf6f-ba21df3a799b
+
+
 
 ## Reply notify
 Example: [Click](https://github.com/zxcnoname666/Notify-Manager-electron/tree/main/examples/reply)
 
 Demo:
 
-https://user-images.githubusercontent.com/121295212/235345354-4be5234a-fdef-4861-be74-37538c8e22b7.mp4
+https://github.com/zxcnoname666/notify-manager-electron/assets/156155219/3d0215f1-31c1-436f-84c9-48c9bb58573b
+
+
 
 # How to use
 ### Creating a NotifyManager
