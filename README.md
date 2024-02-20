@@ -9,11 +9,11 @@ Create beautiful and functional notifications on electron
 </p>
 
 # Info
-You can test the library with `npm run test` or `npm run test.reply`. And also see the source code of [examples](https://github.com/fydne/Notify-Manager-electron/tree/main/examples)
+You can test the library with `npm run test` or `npm run test.reply`. And also see the source code of [examples](https://github.com/zxcnoname666/Notify-Manager-electron/tree/main/examples)
 
 #### Approximate result:
 <a href="javascript:void(0)">
-<img src="https://cdn.fydne.dev/another/kvrfintgaflc/image.png">
+<img src="https://github.com/zxcnoname666/repo-files/raw/main/notify-manager-electron/example.png">
 </a>
 
 > You can change the appearance of the notification by adding your style when creating the NotifyManager
@@ -22,14 +22,14 @@ You can use your own sounds when showing a notification.
 
 # Demo
 ## Standart notify
-Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/examples/small.js)
+Example: [Click](https://github.com/zxcnoname666/Notify-Manager-electron/tree/main/examples/small.js)
 
 Demo:
 
 https://user-images.githubusercontent.com/121295212/219909789-5f343998-814b-4c2a-814b-d290ea1fe3a2.mp4
 
 ## Reply notify
-Example: [Click](https://github.com/fydne/Notify-Manager-electron/tree/main/examples/reply)
+Example: [Click](https://github.com/zxcnoname666/Notify-Manager-electron/tree/main/examples/reply)
 
 Demo:
 
@@ -78,7 +78,7 @@ const { shell } = require('electron');
 
 const notify = new Notify('Click hook', 'Click to open link');
 
-_manager.show(notify, () => shell.openExternal('https://github.com/fydne/notify-manager-electron'));
+_manager.show(notify, () => shell.openExternal('https://github.com/zxcnoname666/notify-manager-electron'));
 ```
 #### Notification with image & custom duration
 Recommended image size - 55x55px
@@ -90,18 +90,15 @@ const notify = new Notify('Your App', 'Your beautiful message', duration, 'https
 _manager.show(notify);
 ```
 #### Notify with sound
-##### Attention: It is not recommended to use music playing for a long time. Instead, use sounds up to 10 seconds long. The example below uses music for demonstration purposes only.
+##### Attention: It is not recommended to use music playing for a long time. Instead, use sounds up to 10 seconds long.
 ```javascript
 // url, volume
-const sound = new NotifySound('https://cdn.fydne.dev/another/rgq05ekp8k4k/sneg.mp3', 50);
+const sound = new NotifySound('https://github.com/zxcnoname666/repo-files/raw/main/notify-manager-electron/meow1.mp3', 50);
 
-const body = 'notify with sound & html'+
-'<img style="width: 1px; min-width: 1px; height: 1px; min-height: 1px;" '+
-'src="https://cdn.fydne.dev/another/j7jtku7ebf86/1px.svg" '+
-'onload="window.open(`https://soundcloud.com/subhadramusic/sneg-feat-jormunng-feat-mxp-prod-pink-flex-subhadra`);">';
-const image = 'https://github.com/fydne/SoundCloud-Desktop/raw/main/icons/appLogo.png';
+const body = '<span style="color:red !important;">text</span>';
+const image = 'https://github.com/zxcnoname666/SoundCloud-Desktop/raw/main/icons/appLogo.png';
 
-const notify = new Notify('Notify', body, 60, image, sound);
+const notify = new Notify('notify with sound & html', body, 60, image, sound);
 
 // show notify
 _manager.show(notify);

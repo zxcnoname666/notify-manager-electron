@@ -13,7 +13,7 @@ module.exports = class NotifyManager {
      * 4 - bottom-left;
      * @param      {string}  customStyle     Your personal style for notifications
      */
-    constructor(position = 1, customStyle = ''){
+    constructor(position = 1, customStyle = '') {
         this.loaded = false;
         this.position = position;
         this.onclickEvents = [];
@@ -36,49 +36,71 @@ module.exports = class NotifyManager {
             hasShadow: false,
             x: (this.position == 1 || this.position == 2) ? display.workAreaSize.width + display.workArea.x - 320 : 0,
             y: 0,
-            webPreferences:{
+            webPreferences: {
                 devTools: false,
                 preload: __dirname + '/files/preload.js'
             }
         });
 
         this.win.setVisibleOnAllWorkspaces(true);
-        this.win.setIgnoreMouseEvents(true, {forward:true});
+        this.win.setIgnoreMouseEvents(true, { forward: true });
         this.win.setFocusable(false);
 
-        (async() => {
+        (async () => {
             await this.win.loadURL('file://' + __dirname + '/files/render.html');
+
             this.win.webContents.setWindowOpenHandler(({ url }) => {
                 shell.openExternal(url);
                 return { action: 'deny' };
             });
+
             this.win.send('load-position', this.position);
             this.win.send('custom-style', customStyle);
             this.loaded = true;
             //this.win.webContents.openDevTools({mode: 'detach'});
 
             ipcMain.on('notify-manager-set-visibly', (ev, boolean, focus) => {
-                if(ev.sender != this.win.webContents) return;
-                this.win.setIgnoreMouseEvents(!boolean, {forward:true});
-                if(boolean && focus) this.win.setFocusable(boolean);
-                else this.win.setFocusable(false);
+                if (ev.sender != this.win.webContents) {
+                    return;
+                }
+
+                this.win.setIgnoreMouseEvents(!boolean, { forward: true });
+                if (boolean && focus) {
+                    this.win.setFocusable(boolean);
+                } else {
+                    this.win.setFocusable(false);
+                }
             });
+
             ipcMain.on('notify-manager-onclick', (ev, id) => {
-                if(ev.sender != this.win.webContents) return;
+                if (ev.sender != this.win.webContents) {
+                    return;
+                }
+
                 const element = this.onclickEvents.find(x => x.id == id);
-                if(!element) return;
-                try{
-                    if(typeof element.event == 'function'){
+                if (!element) {
+                    return;
+                }
+
+                try {
+                    if (typeof element.event == 'function') {
                         element.event();
                     }
-                }catch(e){
+                } catch (e) {
                     console.error(e);
                 }
             });
+
             ipcMain.on('notify-manager-destory', (ev, id) => {
-                if(ev.sender != this.win.webContents) return;
+                if (ev.sender != this.win.webContents) {
+                    return;
+                }
+
                 const notify = this.activeNotifications.find(x => x.id == id);
-                if(!notify) return;
+                if (!notify) {
+                    return;
+                }
+
                 Extensions.destroyNotify(notify, this);
             });
         })();
@@ -87,7 +109,7 @@ module.exports = class NotifyManager {
     isLoaded() {
         return this.loaded;
     }
-    
+
     getWindow() {
         return this.win;
     }
@@ -95,9 +117,11 @@ module.exports = class NotifyManager {
     /**
      * @param      {Notify}  notify     Notification to show
      */
-    async show(notify, onclick = null){
-        while(!this.loaded) await delay(1000);
-        
+    async show(notify, onclick = null) {
+        while (!this.loaded) {
+            await delay(100);
+        }
+
         this.win.showInactive();
         this.win.send('show', {
             id: notify.id,
@@ -110,12 +134,8 @@ module.exports = class NotifyManager {
 
         this.activeNotifications.push(notify);
 
-        setTimeout(() => {
-            Extensions.destroyNotify(notify, this);
-        }, notify.time * 1000);
-
-        if(onclick){
-            if(typeof onclick != 'function'){
+        if (onclick) {
+            if (typeof onclick != 'function') {
                 console.error('onclick is not a function');
                 return notify;
             }
@@ -128,12 +148,15 @@ module.exports = class NotifyManager {
 
         return notify;
     }
-    
+
     /**
      * @param      {Notify}  notify     Notification to destroy
      */
-    destroy(notify){
-        if(!this.loaded) throw new Error('window not initialized yet');
+    destroy(notify) {
+        if (!this.loaded) {
+            throw new Error('window not initialized yet');
+        }
+        
         this.win.send('destroy', {
             id: notify.id,
             sound: notify.sound

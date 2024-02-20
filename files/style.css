@@ -1,4 +1,4 @@
-body{
+body {
     display: flex;
     height: 100vh;
     margin: 0;
@@ -13,14 +13,16 @@ body[class="position-2"],
 body[class="position-3"] {
     align-items: flex-start;
 }
-audio{
+
+audio {
     display: none;
 }
-#block{
+#block {
     display: block;
     width: 100%;
 }
-.notify{
+
+.notify {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -32,14 +34,14 @@ audio{
     background: linear-gradient(90deg, #1f1f1fdc 0%, #212122d3 100%);
     box-shadow: -1px 5px 5px 1px #00000025, -1px 5px 5px 1px #00000040;
 }
-.notify.clickActive{
+.notify.clickActive {
     cursor: pointer;
 }
-.notify.clickActive:hover{
+.notify.clickActive:hover {
     box-shadow: 0px 2px 8px 4px rgba(44, 79, 131, 0.4);
     transform: translateY(-5px);
 }
-.notify .title{
+.notify .title {
     display: flex;
     color: #ffffff;
     font-family: cursive;
@@ -49,7 +51,7 @@ audio{
     margin: 0 10px;
     margin-bottom: 3px;
 }
-.notify img{
+.notify img {
     min-height: 55px;
     min-width: 55px;
     height: 55px;
@@ -60,21 +62,22 @@ audio{
     object-fit: cover;
     overflow: hidden;
 }
-.notify p{
+.notify p {
     color: #c8c8c8;
     margin: 10px;
     overflow-y: auto;
     width: 100%;
     word-break: break-word;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
     height: 3px;
     width: 3px;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background-color: #99afbd;
 }
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
     background-color: #18191c;
 }
 
@@ -96,38 +99,38 @@ body[class="position-4"] .notify.hide {
     animation: toLeftEnd .9s cubic-bezier(0.28, 0.99, 0.58, 1);
 }
 
-body .notify.hide.del{
+body .notify.hide.del {
     min-height: 0px;
     animation: toDelHide .1s cubic-bezier(1, -0.01, 0.38, 0.64);
 }
 body[class="position-1"] .notify.hide.del,
-body[class="position-2"] .notify.hide.del{
+body[class="position-2"] .notify.hide.del {
     transform: translateX(110%);
 }
 body[class="position-3"] .notify.hide.del,
-body[class="position-4"] .notify.hide.del{
+body[class="position-4"] .notify.hide.del {
     transform: translateX(-110%);
 }
 
-@keyframes toLeftStart{
+@keyframes toLeftStart {
     from{transform: translateX(110%)}
     100%{transform: translateX(0)}
 }
-@keyframes toRightEnd{
+@keyframes toRightEnd {
     from{transform: translateX(0)}
     100%{transform: translateX(110%)}
 }
 
-@keyframes toRightStart{
+@keyframes toRightStart {
     from{transform: translateX(-110%)}
     100%{transform: translateX(0)}
 }
-@keyframes toLeftEnd{
+@keyframes toLeftEnd {
     from{transform: translateX(0)}
     100%{transform: translateX(-110%)}
 }
 
-@keyframes toDelHide{
+@keyframes toDelHide {
     from{height: attr(send-height);}
     to{height: 0px;}
 }

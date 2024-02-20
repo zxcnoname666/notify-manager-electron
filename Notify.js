@@ -10,7 +10,7 @@ module.exports = class Notify {
      * @param      {string}  imageUrl     Link to image of notification (file:// or http(s):// or another protocol)
      * @param      {NotifySound}  sound     Sound to play when a notification is shown
      */
-    constructor(title, body, time = 10, imageUrl = null, sound = null){
+    constructor(title, body, time = 10, imageUrl = null, sound = null) {
         this.id = id++;
         this.title = title;
         this.body = body;
@@ -27,10 +27,11 @@ module.exports = class Notify {
     }
 
     onDestroy(func) {
-        if(typeof func != 'function'){
+        if (typeof func != 'function') {
             console.error('func is not a function');
             return;
         }
+        
         this.destroyEvents.push(func);
     }
 };

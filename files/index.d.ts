@@ -61,7 +61,7 @@ export class Notify {
      * changing it afterwards will not affect to the notification.
      */
     sound?: NotifySound;
-    
+
     /**
      * Returns a boolean variable indicating whether the 
      * notification was destroyed in any way.
@@ -73,7 +73,7 @@ export class Notify {
      * 
      * @param func The function that will be called when the notification is destroyed.
      */
-    onDestroy(func: void) : void;
+    onDestroy(func: void): void;
 };
 
 export class NotifySound {
@@ -106,22 +106,22 @@ export class NotifyManager {
      * @param notify Notification to show
      * @param onclick onClick callback
      */
-    async show(notify: Notify, onclick: void = null) : Notify;
-    
+    async show(notify: Notify, onclick: void = null): Promise<Notify>;
+
     /**
      * Destroys the specified notification
      * 
      * @param notify Notification to destroy
      */
-    destroy(notify: Notify) : void;
+    destroy(notify: Notify): void;
 
     /**
      * Displays whether initialization has ended or not.
      */
-    isLoaded() : boolean;
+    isLoaded(): boolean;
 
     /**
      * Gets the BrowserWindow of notification manager.
      */
-    getWindow() : BrowserWindow;
+    getWindow(): BrowserWindow;
 };
